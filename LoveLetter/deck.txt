@@ -1,0 +1,9 @@
+8
+8 Princess 1 If you discard this card, you are out of the round
+7 Countess 1 If you hold King or Prince, you must discard this card
+6 King 1 Trade hands with another player of your choice
+5 Prince 2 Choose a player to discard his/her hand and draw a new card
+4 Handmaid 2 Until next turn, ignore all effects from other players' cards
+3 Baron 2 You are another player secretly compare hands, the player with lower value is out of the round
+2 Priest 2 Look at another player's hand
+1 Guard 5 Name a non-Guard card and choose a player. If that player has that card, he/she is out of the round
