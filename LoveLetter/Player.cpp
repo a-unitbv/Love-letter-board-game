@@ -10,6 +10,7 @@ void Player::draw(Card* card) {
 }
 
 void Player::discard(int cardIndex) {
+	this->discardedCards.push_back(move(this->playerHand[cardIndex]));
 	this->playerHand.erase(this->playerHand.begin() + cardIndex);
 }
 
@@ -19,4 +20,14 @@ void Player::show() {
 		cout << "\t- ";
 		card->printCard();
 	}
+}
+
+string Player::getPlayerName()
+{
+	return this->playerName;
+}
+
+int Player::getPlayerTokens()
+{
+	return this->playerTokens;
 }

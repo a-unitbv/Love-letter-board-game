@@ -22,6 +22,8 @@ Deck::Deck(string filename) : totalCards(16), remainingCards(16), isShuffled(0) 
 			this->cardsList.push_back(new Card(cardName, cardValue, cardDescription));
 		}
 	}
+	cout << "Deck has been created!" << endl;
+	this->shuffleDeck();
 }
 
 Card* Deck::drawCard()
@@ -40,6 +42,8 @@ void Deck::shuffleDeck()
 	std::mt19937 g(rd());
 
 	std::shuffle(this->cardsList.begin(), this->cardsList.end(), g);
+
+	cout << "Deck has been shuffled!" << endl;
 }
 
 void Deck::printDeck() {

@@ -7,6 +7,7 @@ using namespace std;
 class Player {
 	string playerName;
 	vector<Card*> playerHand;
+	vector<Card*> discardedCards;
 	int playerTokens;
 	bool playerStatus;
 public:
@@ -15,4 +16,7 @@ public:
 	void draw(Card*);
 	void discard(int);
 	void show();
+
+	string getPlayerName();
+	int getPlayerTokens();
 };
