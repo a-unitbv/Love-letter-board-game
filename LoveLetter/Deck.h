@@ -14,5 +14,7 @@ class Deck {
 public:
 	Deck(string);
 
+	Card* drawCard();
+	void shuffleDeck();
 	void printDeck();
 };

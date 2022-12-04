@@ -1,4 +1,5 @@
 #include "Deck.h"
+#include <random>
 
 Deck::Deck(string filename) : totalCards(16), remainingCards(16), isShuffled(0) {
 	ifstream fileIn(filename);
@@ -23,7 +24,26 @@ Deck::Deck(string filename) : totalCards(16), remainingCards(16), isShuffled(0) 
 	}
 }
 
+Card* Deck::drawCard()
+{
+	if (this->remainingCards > 0) {
+		this->remainingCards--;
+		Card* drawnCard = move(this->cardsList[0]);
+		this->cardsList.erase(this->cardsList.begin());
+		return drawnCard;
+	}
+}
+
+void Deck::shuffleDeck()
+{
+	std::random_device rd;
+	std::mt19937 g(rd());
+
+	std::shuffle(this->cardsList.begin(), this->cardsList.end(), g);
+}
+
 void Deck::printDeck() {
+	cout << "Remaining cards (" << this->remainingCards << ")\n";
 	for (Card* card : this->cardsList) {
 		card->printCard();
 	}
