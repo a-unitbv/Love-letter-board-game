@@ -18,5 +18,9 @@ public:
 	void show();
 
 	string getPlayerName();
+	bool getPlayerStatus();
 	int getPlayerTokens();
+	int getLastCardValue();
+	void giveAffectionTokens(int);
+
 };

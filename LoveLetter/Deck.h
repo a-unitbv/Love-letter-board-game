@@ -14,7 +14,10 @@ class Deck {
 public:
 	Deck(string);
 
+	int getRemainingCards();
+
 	Card* drawCard();
+	int isEmpty();
 	void shuffleDeck();
 	void printDeck();
 };

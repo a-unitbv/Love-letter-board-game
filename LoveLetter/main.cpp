@@ -3,5 +3,5 @@
 int main()
 {
     LoveLetter* game = new LoveLetter("deck.txt");
-    game->startGame();
+    game->start();
 }

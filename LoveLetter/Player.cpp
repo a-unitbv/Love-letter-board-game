@@ -27,7 +27,22 @@ string Player::getPlayerName()
 	return this->playerName;
 }
 
+bool Player::getPlayerStatus()
+{
+	return this->playerStatus;
+}
+
 int Player::getPlayerTokens()
 {
 	return this->playerTokens;
+}
+
+int Player::getLastCardValue()
+{
+	return this->discardedCards[this->discardedCards.size() - 1]->getCardValue();
+}
+
+void Player::giveAffectionTokens(int tokens)
+{
+	this->playerTokens += tokens;
 }

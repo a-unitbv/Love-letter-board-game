@@ -1,7 +1,6 @@
 #pragma once
 #include "Player.h"
 #include "Deck.h"
-
 #include <vector>
 
 using namespace std;
@@ -17,6 +16,17 @@ public:
 	LoveLetter(string);
 
 	void addPlayer(Player*);
+	void drawCard();
+	void drawCard(Player*);
+	void discardCards();
 	void printGameStatus();
-	void startGame();
+	int isFinished();
+	int isGameFinished();
+	int calculateAffectionTokens();
+	void giveAffectionTokens();
+	void restartGame();
+	void newGame();
+	void newRound();
+	void newTurn(Player*);
+	void start();
 };

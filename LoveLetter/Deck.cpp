@@ -26,6 +26,11 @@ Deck::Deck(string filename) : totalCards(16), remainingCards(16), isShuffled(0) 
 	this->shuffleDeck();
 }
 
+int Deck::getRemainingCards()
+{
+	return this->remainingCards;
+}
+
 Card* Deck::drawCard()
 {
 	if (this->remainingCards > 0) {
@@ -34,6 +39,13 @@ Card* Deck::drawCard()
 		this->cardsList.erase(this->cardsList.begin());
 		return drawnCard;
 	}
+}
+
+int Deck::isEmpty()
+{
+	if (this->cardsList.size() == 0)
+		return 1;
+	return 0;
 }
 
 void Deck::shuffleDeck()
