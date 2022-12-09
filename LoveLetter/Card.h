@@ -5,15 +5,21 @@
 using namespace std;
 
 class Card {
-	string cardName;
 	int cardValue;
+	string cardName;
 	string cardDescription;
 public:
-	Card(string, int, string);
+	//Constructor area
+	Card(int, string, string);
 
-	string getCardName();
+	//Getters area
 	int getCardValue();
+	string getCardName();
 	string getCardDescription();
 
+	//Methods area
 	void printCard();
+
+	//Destructor area
+	~Card();
 };

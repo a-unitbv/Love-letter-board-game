@@ -1,6 +1,7 @@
 #include "LoveLetter.h"
 
-LoveLetter::LoveLetter(string _filename): game(0), round(0), turn(0)
+//Constructor area
+LoveLetter::LoveLetter(string _filename) : status()
 {
     cout << "Welcome to LoveLetter Game!" << endl;
 
@@ -24,6 +25,7 @@ LoveLetter::LoveLetter(string _filename): game(0), round(0), turn(0)
     this->deck = new Deck(_filename);
 }
 
+//Methods area
 void LoveLetter::addPlayer(Player * player) {
     this->players.push_back(player);
 }
@@ -69,8 +71,11 @@ void LoveLetter::giveAffectionTokens()
 
 void LoveLetter::restartGame()
 {
-    //move cards
-
+    for (Player* player : this->players) {
+        deck->remakeDeck(player->getDiscardedCards());
+        player->clearDiscardedCards();
+    }
+    cout << "Deck has been remade!" << endl;
     deck->shuffleDeck();
 }
 
@@ -82,23 +87,23 @@ void LoveLetter::drawCard()
 
 void LoveLetter::drawCard(Player* player) {
     cout << "Player " << player->getPlayerName() << " has drawn a card! Remaning cards: " << this->deck->getRemainingCards() << endl;
-    player->draw(this->deck->drawCard());
+    player->drawCard(this->deck->drawCard());
 }
 
 void LoveLetter::discardCards()
 {
     for (Player* player : this->players)
-        player->discard(0);
+        player->discardCard(0);
 }
 
 void LoveLetter::newGame() {
     drawCard();
-    this->game++;
-    cout << "Game " << this->game << endl;
+    this->status.game++;
+    cout << "Game " << this->status.game << endl;
     while (!isGameFinished()) {
         newRound();
     }
-    this->round = 0;
+    this->status.round = 0;
     discardCards();
     giveAffectionTokens();
     printGameStatus();
@@ -106,29 +111,44 @@ void LoveLetter::newGame() {
 }
 
 void LoveLetter::newRound() {
-    this->round++;
-    cout << "Round " << this->round << endl;
+    this->status.round++;
+    cout << "Round " << this->status.round << endl;
     for (Player* player : this->players) {
         newTurn(player);
     }
-    this->turn = 0;
+    this->status.turn = 0;
 }
 
 void LoveLetter::newTurn(Player * player) {
     if (this->deck->isEmpty()) return;
     if (player->getPlayerStatus()) return;
-    this->turn++;
-    cout << "Turn " << this->turn << endl;
+    this->status.turn++;
+    cout << "Turn " << this->status.turn << endl;
     drawCard(player);
-    player->show();
+    player->showHand();
     cout << "Choose to discard one card (1 or 2): ";
     int discardedCard;
     cin >> discardedCard; 
-    player->discard(discardedCard - 1);
+    player->discardCard(discardedCard - 1);
 }
 
 void LoveLetter::start() {
-    //while (!isFinished()) {
+    /*while (!isFinished()) {
         newGame();
-    //}
+    }
+    printWinner();*/
+}
+
+void LoveLetter::printWinner()
+{
+    for (Player* player : this->players)
+        if (player->getPlayerTokens() >= this->affectionTokensTarget)
+            cout << endl << "The winner is: " << player->getPlayerName() << "! Congratulations" << endl;
+}
+
+//Destructor area
+LoveLetter::~LoveLetter() {
+    delete this->deck;
+    for (Player* player : this->players)
+        delete player;
 }

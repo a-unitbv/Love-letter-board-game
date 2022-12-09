@@ -1,6 +1,7 @@
 #include "Deck.h"
 #include <random>
 
+//Constructor area
 Deck::Deck(string filename) : totalCards(16), remainingCards(16), isShuffled(0) {
 	ifstream fileIn(filename);
 
@@ -19,16 +20,25 @@ Deck::Deck(string filename) : totalCards(16), remainingCards(16), isShuffled(0) 
 		getline(fileIn, cardDescription);
 		
 		for (int j = 0; j < cardDuplicates; j++) {
-			this->cardsList.push_back(new Card(cardName, cardValue, cardDescription));
+			this->cardsList.push_back(new Card(cardValue, cardName, cardDescription));
 		}
 	}
 	cout << "Deck has been created!" << endl;
 	this->shuffleDeck();
 }
 
+//Getters area
 int Deck::getRemainingCards()
 {
 	return this->remainingCards;
+}
+
+//Methods area
+int Deck::isEmpty()
+{
+	if (this->cardsList.size() == 0)
+		return 1;
+	return 0;
 }
 
 Card* Deck::drawCard()
@@ -41,11 +51,12 @@ Card* Deck::drawCard()
 	}
 }
 
-int Deck::isEmpty()
+void Deck::printDeck() 
 {
-	if (this->cardsList.size() == 0)
-		return 1;
-	return 0;
+	cout << "Remaining cards (" << this->remainingCards << ")\n";
+	for (Card* card : this->cardsList) {
+		card->printCard();
+	}
 }
 
 void Deck::shuffleDeck()
@@ -58,9 +69,15 @@ void Deck::shuffleDeck()
 	cout << "Deck has been shuffled!" << endl;
 }
 
-void Deck::printDeck() {
-	cout << "Remaining cards (" << this->remainingCards << ")\n";
+void Deck::remakeDeck(vector<Card*> cards)
+{
+	this->remainingCards += cards.size();
+	this->cardsList.insert(this->cardsList.end(), make_move_iterator(cards.begin()), make_move_iterator(cards.end()));
+}
+
+//Destructor area
+Deck::~Deck() {
 	for (Card* card : this->cardsList) {
-		card->printCard();
+		delete card;
 	}
 }

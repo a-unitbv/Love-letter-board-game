@@ -32,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="deck.txt">
+    <Text Include="deck.in">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

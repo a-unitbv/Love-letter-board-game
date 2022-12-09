@@ -2,6 +2,8 @@
 #include "LoveLetter.h"
 int main()
 {
-    LoveLetter* game = new LoveLetter("deck.txt");
+    LoveLetter* game = new LoveLetter("deck.in");
     game->start();
+
+    delete game;
 }

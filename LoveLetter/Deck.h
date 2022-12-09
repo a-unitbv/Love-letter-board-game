@@ -7,17 +7,24 @@
 using namespace std;
 
 class Deck {
+	int isShuffled;
 	int totalCards;
 	int remainingCards;
-	int isShuffled;
 	vector<Card*> cardsList;
 public:
+	//Constructor area
 	Deck(string);
 
+	//Getters area
 	int getRemainingCards();
 
-	Card* drawCard();
+	//Methods area
 	int isEmpty();
-	void shuffleDeck();
+	Card* drawCard();
 	void printDeck();
+	void shuffleDeck();
+	void remakeDeck(vector<Card*>);
+
+	//Destructor area
+	~Deck();
 };

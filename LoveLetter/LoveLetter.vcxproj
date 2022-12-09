@@ -146,7 +146,7 @@
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="deck.txt" />
+    <Text Include="deck.in" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
