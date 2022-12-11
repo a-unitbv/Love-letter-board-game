@@ -22,6 +22,11 @@ int Player::getPlayerTokens()
 	return this->playerTokens;
 }
 
+Card* Player::getSpecificCard(int index)
+{
+	return this->playerHand[index];
+}
+
 vector<Card*> Player::getDiscardedCards()
 {
 	return this->discardedCards;

@@ -7,15 +7,27 @@ LoveLetter::LoveLetter(string _filename) : status()
 
     cout << "Please enter no. of affection tokens target for players: ";
     cin >> this->affectionTokensTarget;
-    
-    int playersNumber;
+  
+    while (!(find_if(this->affectionTokensTarget.begin(), this->affectionTokensTarget.end(), [](char c) { return !isdigit(c); }) == this->affectionTokensTarget.end())) {
+        cout << "Enter a valid value: ";
+        cin >> this->affectionTokensTarget;
+    }
+   
+    string playersNumber;
     cout << "Please enter no. of players who're going to play with! (2-4): ";
     cin >> playersNumber;
-    while (playersNumber > 4 || playersNumber < 2) {
+  
+    while (!(find_if(playersNumber.begin(), playersNumber.end(), [](char c) { return !isdigit(c); }) == playersNumber.end())) {
         cout << "Wrong number of players, try again! (2-4): ";
         cin >> playersNumber;
     }
-    for (int i = 0; i < playersNumber; i++) {
+
+    while (stoi(playersNumber) > 4 || stoi(playersNumber) < 2) {
+        cout << "Wrong number of players, try again! (2-4): ";
+        cin >> playersNumber;
+    }
+
+    for (int i = 0; i < stoi(playersNumber); i++) {
         string playerName;
         cout << "Enter player's " << i + 1 << " name: ";
         cin >> playerName;
@@ -23,6 +35,9 @@ LoveLetter::LoveLetter(string _filename) : status()
     }
 
     this->deck = new Deck(_filename);
+
+    this->faceDownCard = move(deck->drawCard());
+    cout << "A card has been put aside facedown." << endl;
 }
 
 //Methods area
@@ -38,7 +53,7 @@ void LoveLetter::printGameStatus() {
 
 int LoveLetter::isFinished() {
     for (Player* player : this->players) {
-        if (player->getPlayerTokens() >= this->affectionTokensTarget)
+        if (player->getPlayerTokens() >= stoi(this->affectionTokensTarget))
             return 1;
     }
     return 0;
@@ -64,6 +79,7 @@ void LoveLetter::giveAffectionTokens()
     }
     for (Player* player : this->players) {
         if (player->getLastCardValue() == maxCardValue) {
+            cout << "Player " << player->getPlayerName() << " won the round!" << endl;
             player->giveAffectionTokens(calculateAffectionTokens());
         }
     }
@@ -105,6 +121,7 @@ void LoveLetter::newGame() {
     }
     this->status.round = 0;
     discardCards();
+    cout << "\x1B[2J\x1B[H";
     giveAffectionTokens();
     printGameStatus();
     restartGame();
@@ -119,30 +136,66 @@ void LoveLetter::newRound() {
     this->status.turn = 0;
 }
 
-void LoveLetter::newTurn(Player * player) {
+void LoveLetter::newTurn(Player* player) {
     if (this->deck->isEmpty()) return;
     if (player->getPlayerStatus()) return;
     this->status.turn++;
     cout << "Turn " << this->status.turn << endl;
     drawCard(player);
     player->showHand();
+    
+    string discardedCardIndex;
     cout << "Choose to discard one card (1 or 2): ";
-    int discardedCard;
-    cin >> discardedCard; 
-    player->discardCard(discardedCard - 1);
+    cin >> discardedCardIndex;
+
+    while (discardedCardIndex != "1" && discardedCardIndex != "2")
+    {
+        cout << "Choose to discard one card (1 or 2): ";
+        cin >> discardedCardIndex;
+    }
+
+    //card effect
+    Card* discardedCard = player->getSpecificCard(stoi(discardedCardIndex) - 1);
+    makeAction(discardedCard);
+
+    player->discardCard(stoi(discardedCardIndex) - 1);
+}
+
+void LoveLetter::makeAction(Card* card) {
+    switch (card->getCardValue()) {
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+    case 7:
+        break;
+    case 8:
+        break;
+    default:
+        cout << "Could not make action, invalid card value!" << endl;
+        break;
+    }
 }
 
 void LoveLetter::start() {
-    /*while (!isFinished()) {
+    while (!isFinished()) {
         newGame();
     }
-    printWinner();*/
+    printWinner();
 }
 
 void LoveLetter::printWinner()
 {
     for (Player* player : this->players)
-        if (player->getPlayerTokens() >= this->affectionTokensTarget)
+        if (player->getPlayerTokens() >= stoi(this->affectionTokensTarget))
             cout << endl << "The winner is: " << player->getPlayerName() << "! Congratulations" << endl;
 }
 

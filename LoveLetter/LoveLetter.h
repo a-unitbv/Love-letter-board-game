@@ -13,8 +13,10 @@ struct GameStatus {
 class LoveLetter {
 	Deck* deck;
 	GameStatus status;
+	Card* faceDownCard;
 	vector<Player*> players;
-	int affectionTokensTarget;
+	string affectionTokensTarget;
+
 public:
 	//Constructor area
 	LoveLetter(string);
@@ -27,6 +29,7 @@ public:
 	void newGame();
 	void newRound();
 	void newTurn(Player*);
+	void makeAction(Card*);
 	void discardCards();
 	void restartGame();
 	int isFinished();

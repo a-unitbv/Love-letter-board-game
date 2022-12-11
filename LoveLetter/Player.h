@@ -18,6 +18,7 @@ public:
 	string getPlayerName();
 	bool getPlayerStatus();
 	int getPlayerTokens();
+	Card* getSpecificCard(int);
 	vector<Card*> getDiscardedCards();
 
 	//Methods area
