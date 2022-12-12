@@ -21,6 +21,9 @@ public:
 	Card* getSpecificCard(int);
 	vector<Card*> getDiscardedCards();
 
+	//Setters area
+	void setPlayerStatus(bool);
+
 	//Methods area
 	void showHand();
 	void drawCard(Card*);

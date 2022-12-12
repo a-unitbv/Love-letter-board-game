@@ -32,6 +32,11 @@ vector<Card*> Player::getDiscardedCards()
 	return this->discardedCards;
 }
 
+void Player::setPlayerStatus(bool status)
+{
+	this->playerStatus = status;
+}
+
 //Methods area
 void Player::showHand() {
 	cout << "Player " << this->playerName << " has: " << endl;

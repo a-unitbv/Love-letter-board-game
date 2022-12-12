@@ -61,7 +61,11 @@ int LoveLetter::isFinished() {
 
 int LoveLetter::isGameFinished()
 {
-    return this->deck->isEmpty();
+    if (this->deck->isEmpty()) return 1;
+    for (Player* player : this->players)
+        if (player->getPlayerStatus())
+            return 1;
+    return 0;
 }
 
 int LoveLetter::calculateAffectionTokens()
@@ -137,8 +141,8 @@ void LoveLetter::newRound() {
 }
 
 void LoveLetter::newTurn(Player* player) {
-    if (this->deck->isEmpty()) return;
     if (player->getPlayerStatus()) return;
+    if (isGameFinished()) return;
     this->status.turn++;
     cout << "Turn " << this->status.turn << endl;
     drawCard(player);
@@ -154,35 +158,117 @@ void LoveLetter::newTurn(Player* player) {
         cin >> discardedCardIndex;
     }
 
-    //card effect
     Card* discardedCard = player->getSpecificCard(stoi(discardedCardIndex) - 1);
-    makeAction(discardedCard);
+    makeAction(player, discardedCard);
 
     player->discardCard(stoi(discardedCardIndex) - 1);
 }
 
-void LoveLetter::makeAction(Card* card) {
+void LoveLetter::makeAction(Player * player, Card* card) {
     switch (card->getCardValue()) {
     case 1:
+        guardAction(player);
         break;
     case 2:
+        priestAction(player);
         break;
     case 3:
+        baronAction(player);
         break;
     case 4:
+        handmainAction(player);
         break;
     case 5:
+        princeAction(player);
         break;
     case 6:
+        kingAction(player);
         break;
     case 7:
+        countessAction(player);
         break;
     case 8:
+        princessAction(player);
         break;
     default:
         cout << "Could not make action, invalid card value!" << endl;
         break;
     }
+}
+
+void LoveLetter::guardAction(Player* player)
+{
+    string cardName, playerName;
+    cout << "Name a non-Guard card: ";
+    cin >> cardName;
+    vector<string> cardsNames = { "Princess","King","Countess","Prince","Handmain","Baron","Priest" };
+    while ((std::find(cardsNames.begin(), cardsNames.end(), cardName) == cardsNames.end())) {
+        cout << "Unknown card, try again: ";
+        cin >> cardName;
+    }
+    cout << "Enter player name: ";
+    cin >> playerName;
+    vector<string> playersNames;
+    for (Player* p : this->players)
+    {
+        if (p->getPlayerName() != player->getPlayerName())
+            playersNames.push_back(p->getPlayerName());
+    }
+    while ((std::find(playersNames.begin(), playersNames.end(), playerName) == playersNames.end())) {
+        cout << "Unknown player, try again: ";
+        cin >> playerName;
+    }
+
+    Player* namedPlayer = getPlayerByName(playerName);
+    
+    if (namedPlayer->getSpecificCard(0)->getCardName() == cardName) {
+        cout << "You were right! " << playerName << " has been eliminated" << endl;
+        eliminatePlayer(namedPlayer);
+    }
+    else {
+        cout << "You were wrong!" << endl;
+    }
+}
+
+void LoveLetter::priestAction(Player*)
+{
+}
+
+void LoveLetter::baronAction(Player*)
+{
+}
+
+void LoveLetter::handmainAction(Player*)
+{
+}
+
+void LoveLetter::princeAction(Player*)
+{
+}
+
+void LoveLetter::kingAction(Player*)
+{
+}
+
+void LoveLetter::countessAction(Player*)
+{
+}
+
+void LoveLetter::princessAction(Player*)
+{
+}
+
+Player* LoveLetter::getPlayerByName(string playerName)
+{
+    for (Player* player : this->players)
+        if (player->getPlayerName() == playerName)
+            return player;
+}
+
+void LoveLetter::eliminatePlayer(Player* player)
+{
+    player->discardCard(0);
+    player->setPlayerStatus(1);
 }
 
 void LoveLetter::start() {

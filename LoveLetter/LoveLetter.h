@@ -29,7 +29,17 @@ public:
 	void newGame();
 	void newRound();
 	void newTurn(Player*);
-	void makeAction(Card*);
+	void makeAction(Player*, Card*);
+	void guardAction(Player*);
+	void priestAction(Player*);
+	void baronAction(Player*);
+	void handmainAction(Player*);
+	void princeAction(Player*);
+	void kingAction(Player*);
+	void countessAction(Player*);
+	void princessAction(Player*);
+	Player* getPlayerByName(string);
+	void eliminatePlayer(Player*);
 	void discardCards();
 	void restartGame();
 	int isFinished();
