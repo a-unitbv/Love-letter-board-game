@@ -1,7 +1,4 @@
 ﻿  LoveLetter.cpp
-  Player.cpp
-  main.cpp
-  Generating Code...
-C:\Users\pantu\OneDrive\Desktop\LoveLetter\LoveLetter\LoveLetter.cpp(72): warning C4715: 'LoveLetter::calculateAffectionTokens': not all control paths return a value
-C:\Users\pantu\OneDrive\Desktop\LoveLetter\LoveLetter\LoveLetter.cpp(263): warning C4715: 'LoveLetter::getPlayerByName': not all control paths return a value
+C:\Users\pantu\OneDrive\Desktop\LoveLetter\LoveLetter\LoveLetter.cpp(78): warning C4715: 'LoveLetter::calculateAffectionTokens': not all control paths return a value
+C:\Users\pantu\OneDrive\Desktop\LoveLetter\LoveLetter\LoveLetter.cpp(287): warning C4715: 'LoveLetter::getPlayerByName': not all control paths return a value
   LoveLetter.vcxproj -> C:\Users\pantu\OneDrive\Desktop\LoveLetter\x64\Debug\LoveLetter.exe

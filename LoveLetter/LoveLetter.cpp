@@ -62,9 +62,11 @@ int LoveLetter::isFinished() {
 int LoveLetter::isGameFinished()
 {
     if (this->deck->isEmpty()) return 1;
+    int count = 0;
     for (Player* player : this->players)
-        if (player->getPlayerStatus())
-            return 1;
+        if (player->getPlayerStatus() == 0)
+            count++;
+    if (count == 1) return 1;
     return 0;
 }
 
@@ -79,7 +81,8 @@ void LoveLetter::giveAffectionTokens()
 {
     int maxCardValue = 0;
     for (Player* player : this->players) {
-        maxCardValue < player->getLastCardValue() ? maxCardValue = player->getLastCardValue() : 0;
+        if(player->getPlayerStatus() == 0)
+            maxCardValue < player->getLastCardValue() ? maxCardValue = player->getLastCardValue() : 0;
     }
     for (Player* player : this->players) {
         if (player->getLastCardValue() == maxCardValue) {
@@ -91,9 +94,11 @@ void LoveLetter::giveAffectionTokens()
 
 void LoveLetter::restartGame()
 {
+    
     for (Player* player : this->players) {
         deck->remakeDeck(player->getDiscardedCards());
         player->clearDiscardedCards();
+        player->setPlayerStatus(0);
     }
     cout << "Deck has been remade!" << endl;
     deck->shuffleDeck();
@@ -106,8 +111,8 @@ void LoveLetter::drawCard()
 }
 
 void LoveLetter::drawCard(Player* player) {
-    cout << "Player " << player->getPlayerName() << " has drawn a card! Remaning cards: " << this->deck->getRemainingCards() << endl;
     player->drawCard(this->deck->drawCard());
+    cout << "Player " << player->getPlayerName() << " has drawn a card! Remaning cards: " << this->deck->getRemainingCards() << endl;
 }
 
 void LoveLetter::discardCards()
@@ -201,7 +206,7 @@ void LoveLetter::guardAction(Player* player)
     string cardName, playerName;
     cout << "Name a non-Guard card: ";
     cin >> cardName;
-    vector<string> cardsNames = { "Princess","King","Countess","Prince","Handmain","Baron","Priest" };
+    vector<string> cardsNames = { "Princess","King","Countess","Prince","Handmaid","Baron","Priest" };
     while ((std::find(cardsNames.begin(), cardsNames.end(), cardName) == cardsNames.end())) {
         cout << "Unknown card, try again: ";
         cin >> cardName;
@@ -211,7 +216,7 @@ void LoveLetter::guardAction(Player* player)
     vector<string> playersNames;
     for (Player* p : this->players)
     {
-        if (p->getPlayerName() != player->getPlayerName())
+        if (p->getPlayerName() != player->getPlayerName() && p->getPlayerStatus() == 0)
             playersNames.push_back(p->getPlayerName());
     }
     while ((std::find(playersNames.begin(), playersNames.end(), playerName) == playersNames.end())) {
@@ -230,8 +235,24 @@ void LoveLetter::guardAction(Player* player)
     }
 }
 
-void LoveLetter::priestAction(Player*)
+void LoveLetter::priestAction(Player* player)
 {
+    string playerName;
+    cout << "Enter player name: ";
+    cin >> playerName;
+    vector<string> playersNames;
+    for (Player* p : this->players)
+    {
+        if (p->getPlayerName() != player->getPlayerName() && p->getPlayerStatus() == 0)
+            playersNames.push_back(p->getPlayerName());
+    }
+    while ((std::find(playersNames.begin(), playersNames.end(), playerName) == playersNames.end())) {
+        cout << "Unknown player, try again: ";
+        cin >> playerName;
+    }
+
+    Player* namedPlayer = getPlayerByName(playerName);
+    cout << namedPlayer->getPlayerName() << " is holding " << namedPlayer->getSpecificCard(0)->getCardName() << endl;
 }
 
 void LoveLetter::baronAction(Player*)
@@ -267,7 +288,6 @@ Player* LoveLetter::getPlayerByName(string playerName)
 
 void LoveLetter::eliminatePlayer(Player* player)
 {
-    player->discardCard(0);
     player->setPlayerStatus(1);
 }
 
