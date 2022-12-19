@@ -1,12 +1,11 @@
 #include "Player.h"
 
-//Constructor area
-Player::Player(string _playerName) : playerName(_playerName), playerStatus(0), playerTokens(0)
+Player::Player(string _playerName) : playerName(_playerName), playerStatus(0), playerTokens(0), playerProtection(0)
 {
 
 }
 
-//Getters area
+
 string Player::getPlayerName()
 {
 	return this->playerName;
@@ -20,6 +19,10 @@ bool Player::getPlayerStatus()
 int Player::getPlayerTokens()
 {
 	return this->playerTokens;
+}
+
+bool Player::getPlayerProtection() {
+	return this->playerProtection;
 }
 
 Card* Player::getSpecificCard(int index)
@@ -37,7 +40,12 @@ void Player::setPlayerStatus(bool status)
 	this->playerStatus = status;
 }
 
-//Methods area
+void Player::setPlayerProtection(bool protection)
+{
+	this->playerProtection = protection;
+}
+
+
 void Player::showHand() {
 	cout << "Player " << this->playerName << " has: " << endl;
 	for (Card* card : this->playerHand) {
@@ -70,6 +78,6 @@ void Player::giveAffectionTokens(int tokens)
 	this->playerTokens += tokens;
 }
 
-//Destructor area
+
 Player::~Player() {
 }

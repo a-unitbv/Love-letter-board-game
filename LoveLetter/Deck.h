@@ -12,19 +12,16 @@ class Deck {
 	int remainingCards;
 	vector<Card*> cardsList;
 public:
-	//Constructor area
 	Deck(string);
 
-	//Getters area
 	int getRemainingCards();
 
-	//Methods area
 	int isEmpty();
 	Card* drawCard();
 	void printDeck();
 	void shuffleDeck();
+	void remakeDeck(Card*);
 	void remakeDeck(vector<Card*>);
 
-	//Destructor area
 	~Deck();
 };

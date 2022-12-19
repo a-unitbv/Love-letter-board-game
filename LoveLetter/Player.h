@@ -8,23 +8,22 @@ class Player {
 	string playerName;
 	int playerTokens;
 	bool playerStatus;
+	bool playerProtection;
 	vector<Card*> playerHand;
 	vector<Card*> discardedCards;
 public:
-	//Constructor area
 	Player(string);
 
-	//Getters area
 	string getPlayerName();
 	bool getPlayerStatus();
 	int getPlayerTokens();
+	bool getPlayerProtection();
 	Card* getSpecificCard(int);
 	vector<Card*> getDiscardedCards();
 
-	//Setters area
 	void setPlayerStatus(bool);
+	void setPlayerProtection(bool);
 
-	//Methods area
 	void showHand();
 	void drawCard(Card*);
 	void discardCard(int);
@@ -32,6 +31,5 @@ public:
 	void clearDiscardedCards();
 	void giveAffectionTokens(int);
 
-	//Destructor area
 	~Player();
 };

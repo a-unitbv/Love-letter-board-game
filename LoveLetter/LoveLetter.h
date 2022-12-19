@@ -18,10 +18,8 @@ class LoveLetter {
 	string affectionTokensTarget;
 
 public:
-	//Constructor area
 	LoveLetter(string);
 
-	//Methods area
 	void start();
 	void addPlayer(Player*);
 	void drawCard();
@@ -33,15 +31,16 @@ public:
 	void guardAction(Player*);
 	void priestAction(Player*);
 	void baronAction(Player*);
-	void handmainAction(Player*);
+	void handmaidAction(Player*);
 	void princeAction(Player*);
 	void kingAction(Player*);
-	void countessAction(Player*);
+	int countessAction(Player*);
 	void princessAction(Player*);
-	Player* getPlayerByName(string);
+	Player* getPlayerByName();
 	void eliminatePlayer(Player*);
 	void discardCards();
 	void restartGame();
+	Card* getFaceDownCard();
 	int isFinished();
 	int isGameFinished();
 	int calculateAffectionTokens();
@@ -49,6 +48,5 @@ public:
 	void printGameStatus();
 	void printWinner();
 
-	//Destructor area
 	~LoveLetter();
 };
